@@ -11,8 +11,13 @@ interface INewTransactionModalProps {
 }
 
 enum TransactionTypeEnum {
-    DEPOSIT = 'deposit',
-    WITHDRAW = 'withdraw'
+    DEPOSIT = "deposit",
+    WITHDRAW = "withdraw"
+}
+
+enum TransactionColorEnum {
+    GREEN = "green",
+    RED = "red"
 }
 
 export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionModalProps) {
@@ -43,6 +48,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionMo
                             type="button"
                             isActive={type === TransactionTypeEnum.DEPOSIT}
                             onClick={()=>{ setType(TransactionTypeEnum.DEPOSIT) }}
+                            activeColor={TransactionColorEnum.GREEN}
                         >
                             <img src={incomeImg} alt="Entrada"/>
                             <span>Entrada</span>
@@ -52,6 +58,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionMo
                             type="button"
                             isActive={type === TransactionTypeEnum.WITHDRAW}
                             onClick={()=>{ setType(TransactionTypeEnum.WITHDRAW) }}
+                            activeColor={TransactionColorEnum.RED}
                         >
                             <img src={outcomeImg} alt="Saida"/>
                             <span>Saída</span>
