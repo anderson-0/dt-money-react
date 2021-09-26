@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Modal from "react-modal";
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
@@ -22,6 +22,11 @@ enum TransactionColorEnum {
 
 export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionModalProps) {
     const [type, setType] = useState('deposit');
+
+    function handleCreateNewTransaction(event: FormEvent) {
+        event.preventDefault();
+    }
+
     return (
         <Modal 
             isOpen={isOpen} 
@@ -36,7 +41,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionMo
                 >
                     <img src={closeImg} alt="Fechar modal"/>    
                 </button>
-                <Container>
+                <Container onSubmit={handleCreateNewTransaction}>
                     <h2>Cadastrar Transação</h2>
 
                     <input placeholder="Título"/>
