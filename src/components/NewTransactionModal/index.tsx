@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Modal from "react-modal";
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
@@ -9,7 +10,13 @@ interface INewTransactionModalProps {
   onRequestClose: () => void;
 }
 
+enum TransactionTypeEnum {
+    DEPOSIT = 'deposit',
+    WITHDRAW = 'withdraw'
+}
+
 export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionModalProps) {
+    const [type, setType] = useState('deposit');
     return (
         <Modal 
             isOpen={isOpen} 
@@ -34,6 +41,8 @@ export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionMo
                     <TransactionTypeContainer>
                         <RadioBoxTransactionType
                             type="button"
+                            isActive={type === TransactionTypeEnum.DEPOSIT}
+                            onClick={()=>{ setType(TransactionTypeEnum.DEPOSIT) }}
                         >
                             <img src={incomeImg} alt="Entrada"/>
                             <span>Entrada</span>
@@ -41,6 +50,8 @@ export function NewTransactionModal({ isOpen, onRequestClose }:INewTransactionMo
 
                         <RadioBoxTransactionType
                             type="button"
+                            isActive={type === TransactionTypeEnum.WITHDRAW}
+                            onClick={()=>{ setType(TransactionTypeEnum.WITHDRAW) }}
                         >
                             <img src={outcomeImg} alt="Saida"/>
                             <span>Saída</span>
