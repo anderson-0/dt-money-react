@@ -1,12 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Container } from "./styles";
 
-export function TransactionsTable() {
+interface ITransaction {
+    id: string;
+    title: string;
+    amount: number;
+    type: string;
+    category: string;
+    createdAt: string;
+}
 
+export function TransactionsTable() {
+    const [transactions, setTransactions] = useState<ITransaction[]>([]);
     useEffect(() => {
         api.get('transactions')
-            .then(data => console.log(data));        
+            .then(response => setTransactions(response.data.transactions));        
     }, []);
     return (
         <Container>
@@ -20,19 +29,16 @@ export function TransactionsTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className="title">Desenvolvimento de site</td>
-                        <td className="deposit">R$12.000</td>
-                        <td>Desenvolvimento</td>
-                        <td>20/02/2021</td>
-                    </tr>
-                    <tr>
-                        <td className="title">Aluguel</td>
-                        <td className="withdraw">- R$12.000</td>
-                        <td>Casa</td>
-                        <td>17/02/2021</td>
-                    </tr>
-                    
+                    {transactions.map(transaction => {
+                        return (
+                            <tr key={transaction.id}>
+                                <td className="title">{transaction.title}</td>
+                                <td className={transaction.type}>R${transaction.amount}</td>
+                                <td>{transaction.category}</td>
+                                <td>{transaction.createdAt}</td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
         </Container>
